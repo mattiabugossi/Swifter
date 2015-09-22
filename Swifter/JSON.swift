@@ -161,7 +161,6 @@ public enum JSON : Equatable, CustomStringConvertible {
         switch self {
         case .JSONString(let value):
             return value
-            
         default:
             return nil
         }

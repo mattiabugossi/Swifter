@@ -52,7 +52,7 @@ public class SwifterHTTPRequest: NSObject, NSURLConnectionDataDelegate {
     var connection: NSURLConnection!
 
     var headers: Dictionary<String, String>
-    var parameters: Dictionary<String, AnyObject>
+    var parameters: Dictionary<String, Any>
     var encodeParameters: Bool
 
     var uploadData: [DataUpload]
@@ -75,7 +75,7 @@ public class SwifterHTTPRequest: NSObject, NSURLConnectionDataDelegate {
         self.init(URL: URL, method: "GET", parameters: [:])
     }
 
-    public init(URL: NSURL, method: String, parameters: Dictionary<String, AnyObject>) {
+    public init(URL: NSURL, method: String, parameters: Dictionary<String, Any>) {
         self.URL = URL
         self.HTTPMethod = method
         self.headers = [:]
