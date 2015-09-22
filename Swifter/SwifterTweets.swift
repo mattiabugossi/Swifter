@@ -143,7 +143,7 @@ public extension Swifter {
     - https://dev.twitter.com/docs/api/multiple-media-extended-entities
     */
     public func postStatusUpdate(status: String, inReplyToStatusID: String? = nil, lat: Double? = nil, long: Double? = nil, placeID: Double? = nil, displayCoordinates: Bool? = nil, trimUser: Bool? = nil, success: ((status: Dictionary<String, JSONValue>?) -> Void)? = nil, failure: FailureHandler? = nil) {
-        var path: String = "statuses/update.json"
+        let path: String = "statuses/update.json"
 
         var parameters = Dictionary<String, Any>()
         parameters["status"] = status
@@ -351,8 +351,8 @@ public extension Swifter {
     public func getStatusesLookupTweetIDs(tweetIDs: [String], includeEntities: Bool? = nil, map: Bool? = nil, success: ((statuses: [JSONValue]?) -> Void)? = nil, failure: FailureHandler? = nil) {
         let path = "statuses/lookup.json"
 
-        var parameters = Dictionary<String, Any>()
-        parameters["id"] = join(",", tweetIDs)
+        var parameters = Dictionary<String, AnyObject>()
+        parameters["id"] = tweetIDs.joinWithSeparator(",")
 
         if includeEntities != nil {
             parameters["include_entities"] = includeEntities!

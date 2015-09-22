@@ -103,7 +103,7 @@ internal class SwifterAccountsClient: SwifterClientProtocol {
     class func convertDictionaryValuesToStrings(dictionary: Dictionary<String, Any>) -> Dictionary<String, String> {
         var result = Dictionary<String, String>()
 
-        for (key, value: Any) in dictionary {
+        for (key, value) in dictionary {
             result[key] = "\(value)"
         }
 

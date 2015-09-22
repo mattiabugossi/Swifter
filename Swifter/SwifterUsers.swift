@@ -187,7 +187,7 @@ public extension Swifter {
 
         var parameters = Dictionary<String, Any>()
         if imageData != nil {
-            parameters["image"] = imageData!.base64EncodedStringWithOptions(nil)
+            parameters["image"] = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         }
         if title != nil {
             parameters["title"] = title!
@@ -261,7 +261,7 @@ public extension Swifter {
 
         var parameters = Dictionary<String, Any>()
         if imageData != nil {
-            parameters["image"] = imageData!.base64EncodedStringWithOptions(nil)
+            parameters["image"] = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         }
         if includeEntities != nil {
             parameters["include_entities"] = includeEntities!
@@ -448,8 +448,8 @@ public extension Swifter {
     public func getUsersLookupWithScreenNames(screenNames: [String], includeEntities: Bool? = nil, success: ((users: [JSONValue]?) -> Void)? = nil, failure: FailureHandler) {
         let path = "users/lookup.json"
 
-        var parameters = Dictionary<String, Any>()
-        parameters["screen_name"] = join(",", screenNames)
+        var parameters = Dictionary<String, AnyObject>()
+        parameters["screen_name"] = screenNames.joinWithSeparator(",")
 
         if includeEntities != nil {
             parameters["include_entities"] = includeEntities!
@@ -470,7 +470,7 @@ public extension Swifter {
         var parameters = Dictionary<String, Any>()
 
         let userIDStrings = userIDs.map { String($0) }
-        parameters["user_id"] = join(",", userIDStrings)
+        parameters["user_id"] = userIDStrings.joinWithSeparator(",")
 
         if includeEntities != nil {
             parameters["include_entities"] = includeEntities!
@@ -696,7 +696,7 @@ public extension Swifter {
 
         var parameters = Dictionary<String, Any>()
         if imageData != nil {
-            parameters["banner"] = imageData!.base64EncodedStringWithOptions(nil)
+            parameters["banner"] = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         }
         if width != nil {
             parameters["width"] = width!
