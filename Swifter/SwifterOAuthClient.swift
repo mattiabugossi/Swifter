@@ -125,7 +125,7 @@ internal class SwifterOAuthClient: SwifterClientProtocol  {
             authorizationParameters["oauth_token"] = self.credential!.accessToken!.key
         }
 
-        for (key, value: AnyObject) in parameters {
+        for (key, value) in parameters {
             if key.hasPrefix("oauth_") {
                 authorizationParameters.updateValue(value, forKey: key)
             }
@@ -148,7 +148,7 @@ internal class SwifterOAuthClient: SwifterClientProtocol  {
             }
         }
 
-        return "OAuth " + join(", ", headerComponents)
+        return "OAuth " + headerComponents.joinWithSeparator(", ")
     }
 
     func oauthSignatureForMethod(method: String, url: NSURL, parameters: Dictionary<String, AnyObject>, accessToken token: SwifterCredential.OAuthAccessToken?) -> String {
@@ -161,19 +161,19 @@ internal class SwifterOAuthClient: SwifterClientProtocol  {
 
         let signingKey = "\(encodedConsumerSecret)&\(tokenSecret)"
 
-        var parameterComponents = parameters.urlEncodedQueryStringWithEncoding(self.dataEncoding).componentsSeparatedByString("&") as [String]
+        let parameterComponents = parameters.urlEncodedQueryStringWithEncoding(self.dataEncoding).componentsSeparatedByString("&") as [String]
         parameterComponents.sort { $0 < $1 }
 
-        let parameterString = join("&", parameterComponents)
+        let parameterString = parameterComponents.joinWithSeparator("&")
         let encodedParameterString = parameterString.urlEncodedStringWithEncoding(self.dataEncoding)
 
-        let encodedURL = url.absoluteString!.urlEncodedStringWithEncoding(self.dataEncoding)
+        let encodedURL = url.absoluteString.urlEncodedStringWithEncoding(self.dataEncoding)
 
         let signatureBaseString = "\(method)&\(encodedURL)&\(encodedParameterString)"
 
-        let signature = signatureBaseString.SHA1DigestWithKey(signingKey)
+        _ = signatureBaseString.SHA1DigestWithKey(signingKey)
 
-        return signatureBaseString.SHA1DigestWithKey(signingKey).base64EncodedStringWithOptions(nil)
+        return signatureBaseString.SHA1DigestWithKey(signingKey).base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
     }
     
 }
